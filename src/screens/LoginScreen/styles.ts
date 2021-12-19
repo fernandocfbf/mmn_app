@@ -39,5 +39,18 @@ export const styles = StyleSheet.create({
     buttonContent: {
         width: '100%',
         justifyContent: 'center',
+    },
+    modal: {
+        margin: metrics.baseMargin,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        color: colors.dark_gray,
+        fontSize: metrics.titleSize,
+        marginBottom: metrics.baseMargin/2, 
+        marginTop: metrics.baseMargin/2,
+    },
+    loginDataModal: {
+        margin: metrics.baseMargin
     }
 })

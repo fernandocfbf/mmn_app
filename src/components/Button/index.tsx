@@ -16,6 +16,7 @@ export function Button({ text, textColor, extraStyle, OnPress }: Props) {
         <TouchableOpacity
             onPress={OnPress}
             style={[styles.container, extraStyle]}
+            activeOpacity={0.8}
         >
             <Text style={{color: textColor, }}>{text}</Text>
         </TouchableOpacity>
