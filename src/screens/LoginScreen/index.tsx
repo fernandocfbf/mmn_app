@@ -1,21 +1,30 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useCallback } from 'react'
 import { SafeAreaView, Text, View, Image } from 'react-native'
 import RBSheet from "react-native-raw-bottom-sheet";
 import { Avatar } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
 import { Button } from '../../components/Button'
 import { InputLogin } from '../../components/InputLogin';
+import { Login } from '../../store/ducks/Login/types';
+
+import { loginAuth } from '../../store/ducks/login/actions';
 
 import { styles } from './styles'
 import { colors } from '../../global/colors'
 import { metrics } from '../../global/metrics'
 
-
-
 export function LoginScreen() {
     const alreadyLoginModalRef = useRef(null)
     const insertDataModalRef = useRef(null)
+
+    //redux saga actions 
+    const dispatch = useDispatch();
+    const loginAuthAsync = useCallback((values) => dispatch(loginAuth(values)), [dispatch])
+
+    //redux state
+    //const { loading } = useSelector((state: RootStateOrAny) => state.login);
 
     function closeModal(modalRef: any) {
         if (modalRef.current != null) modalRef.current.close()
@@ -29,6 +38,8 @@ export function LoginScreen() {
         const alreadyLogged = true
         if (alreadyLogged && alreadyLoginModalRef.current != null) alreadyLoginModalRef.current.open()
     }, [])
+
+    //console.log('loading -> ', loading)
 
     return (
         <SafeAreaView
@@ -143,7 +154,7 @@ export function LoginScreen() {
                     <Button
                         text='Enter'
                         OnPress={() => {
-                            console.log("Something")
+                            loginAuthAsync({ email: 'fincattifernando@gmail.com', password: '903294jjdn' })
                         }}
                         textColor={colors.white}
                         extraStyle={{
