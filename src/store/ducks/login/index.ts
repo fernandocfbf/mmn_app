@@ -16,7 +16,6 @@ const reducer: Reducer<LoginState> = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: '',
-                data: action.payload.data
             }
         case LoginTypes.LOGIN_FAILURE:
             return {

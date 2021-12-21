@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect, useRef, useCallback, useState } from 'react'
 import { SafeAreaView, Text, View, Image } from 'react-native'
 import RBSheet from "react-native-raw-bottom-sheet";
 import { Avatar } from 'react-native-elements';
@@ -16,15 +16,21 @@ import { colors } from '../../global/colors'
 import { metrics } from '../../global/metrics'
 
 export function LoginScreen() {
+
+    //variables
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    //ref
     const alreadyLoginModalRef = useRef(null)
     const insertDataModalRef = useRef(null)
 
-    //redux saga actions 
+    //actions 
     const dispatch = useDispatch();
     const loginAuthAsync = useCallback((values) => dispatch(loginAuth(values)), [dispatch])
 
-    //redux state
-    //const { loading } = useSelector((state: RootStateOrAny) => state.login);
+    //state
+    const { loading } = useSelector((state: RootStateOrAny) => state.login);
 
     function closeModal(modalRef: any) {
         if (modalRef.current != null) modalRef.current.close()
@@ -38,8 +44,6 @@ export function LoginScreen() {
         const alreadyLogged = true
         if (alreadyLogged && alreadyLoginModalRef.current != null) alreadyLoginModalRef.current.open()
     }, [])
-
-    //console.log('loading -> ', loading)
 
     return (
         <SafeAreaView
@@ -69,7 +73,7 @@ export function LoginScreen() {
                     />
                     <Button
                         text='Register'
-                        OnPress={() => { console.log('something happened') }}
+                        OnPress={() => { console.log('register button') }}
                         textColor={colors.white}
                         extraStyle={{
                             backgroundColor: colors.background,
@@ -121,7 +125,6 @@ export function LoginScreen() {
                             backgroundColor: colors.white,
                             borderColor: colors.dark_gray,
                             borderWidth: 2,
-
                         }}
                     />
                 </View>
@@ -142,24 +145,23 @@ export function LoginScreen() {
                     <InputLogin
                         placeholder={'email'}
                         icon={<EvilIcons name="envelope" size={24} color={colors.dark_gray} />}
-                        onChange={() => console.log("Pressed!")}
+                        onChange={(e: string) => setEmail(e)}
                         password={false}
                     />
                     <InputLogin
                         placeholder={'password'}
                         icon={<EvilIcons name="lock" size={24} color={colors.dark_gray} />}
-                        onChange={() => console.log("Pressed Again!")}
+                        onChange={(e: string) => setPassword(e)}
                         password={true}
                     />
                     <Button
                         text='Enter'
                         OnPress={() => {
-                            loginAuthAsync({ email: 'fincattifernando@gmail.com', password: '903294jjdn' })
+                            loginAuthAsync({ email: email, password: password })
                         }}
                         textColor={colors.white}
                         extraStyle={{
                             backgroundColor: colors.background,
-
                         }}
                     />
                 </View>

@@ -1,6 +1,6 @@
 import { LoginTypes, Login, LoginError } from './types'
 
-export const loginAuth = ({ email, password }: Login) => {
+export function loginAuth({ email, password }: Login) {
     return {
         type: LoginTypes.LOGIN_AUTH,
         payload: {
@@ -10,13 +10,13 @@ export const loginAuth = ({ email, password }: Login) => {
     }
 }
 
-export const loginSuccess = () => {
+export function loginSuccess() {
     return {
         type: LoginTypes.LOGIN_SUCCESS,
     }
 }
 
-export const loginFailure = ({ error }: LoginError) => {
+export function loginFailure({ error }: LoginError) {
     return {
         type: LoginTypes.LOGIN_FAILURE,
         payload: { error }

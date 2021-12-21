@@ -1,9 +1,9 @@
 
 // Action types 
 export enum LoginTypes {
-    LOGIN_AUTH = 'login/LOGIN_AUTH',
-    LOGIN_SUCCESS = 'login/LOGIN_AUTH',
-    LOGIN_FAILURE = 'login/LOGIN_AUTH'
+    LOGIN_AUTH = '@login/LOGIN_AUTH',
+    LOGIN_SUCCESS = '@login/LOGIN_SUCCESS',
+    LOGIN_FAILURE = '@login/LOGIN_FAILURE'
 }
 
 // Data types - information format insside the reducer
