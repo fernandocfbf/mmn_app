@@ -24,6 +24,12 @@ const reducer: Reducer<LoginState> = (state = INITIAL_STATE, action) => {
                 error: action.payload,
                 data: []
             }
+        
+        case LoginTypes.LOGIN_CLEAR:
+            return {
+                ...state,
+                error: ''
+            }
 
         default: return state
     }

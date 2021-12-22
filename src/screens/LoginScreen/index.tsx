@@ -4,22 +4,25 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { Avatar } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { showMessage } from "react-native-flash-message";
+
 
 import { Button } from '../../components/Button'
 import { InputLogin } from '../../components/InputLogin';
-import { Login } from '../../store/ducks/Login/types';
-
-import { loginAuth } from '../../store/ducks/login/actions';
+import { isAlredyLogged, openModal, closeModal, getUserInitials } from './utils';
+import { loginAuth, loginClear } from '../../store/ducks/login/actions';
 
 import { styles } from './styles'
 import { colors } from '../../global/colors'
 import { metrics } from '../../global/metrics'
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function LoginScreen() {
 
     //variables
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
 
     //ref
     const alreadyLoginModalRef = useRef(null)
@@ -28,26 +31,33 @@ export function LoginScreen() {
     //actions 
     const dispatch = useDispatch();
     const loginAuthAsync = useCallback((values) => dispatch(loginAuth(values)), [dispatch])
+    const loginClearAsync = useCallback(() => dispatch(loginClear()), [dispatch])
 
     //state
-    const { loading } = useSelector((state: RootStateOrAny) => state.login);
-
-    function closeModal(modalRef: any) {
-        if (modalRef.current != null) modalRef.current.close()
-    }
-
-    function openModal(modalRef: any) {
-        if (modalRef.current != null) modalRef.current.open()
-    }
+    const { loading, error } = useSelector((state: RootStateOrAny) => state.login);
 
     useEffect(() => {
-        const alreadyLogged = true
-        if (alreadyLogged && alreadyLoginModalRef.current != null) alreadyLoginModalRef.current.open()
+        isAlredyLogged(alreadyLoginModalRef)
+        getUserInitials(setName)
     }, [])
+
+    useEffect(() => {
+        if (error) {
+            showMessage({
+                message: error.error,
+                icon: 'danger',
+                type: 'danger',
+            });
+            loginClearAsync()
+        }
+    }, [error])
 
     return (
         <SafeAreaView
-            style={{ flexGrow: 1 }}
+            style={{
+                flexGrow: 1,
+                backgroundColor: colors.background
+            }}
         >
             <Image
                 style={styles.logo}
@@ -64,7 +74,7 @@ export function LoginScreen() {
                 <View style={styles.buttonContent}>
                     <Button
                         text='Login'
-                        OnPress={() => { openModal(alreadyLoginModalRef) }}
+                        OnPress={() => { isAlredyLogged(alreadyLoginModalRef, insertDataModalRef, true) }}
                         textColor={colors.background}
                         extraStyle={{
                             backgroundColor: colors.white,
@@ -79,7 +89,6 @@ export function LoginScreen() {
                             backgroundColor: colors.background,
                             borderColor: colors.white,
                             borderWidth: 2,
-
                         }}
                     />
                 </View>
@@ -99,11 +108,11 @@ export function LoginScreen() {
                     <Avatar
                         size="medium"
                         rounded
-                        title="IS"
+                        title={typeof name == 'string' ? name : ''}
                         activeOpacity={1}
                         containerStyle={{ backgroundColor: colors.dark_gray }}
                     />
-                    <Text style={styles.modalTitle}>Hello, Fernando Fincatti</Text>
+                    <Text style={styles.modalTitle}>Hello, {name}</Text>
                     <Button
                         text='Enter'
                         OnPress={() => { openModal(alreadyLoginModalRef) }}
@@ -155,6 +164,7 @@ export function LoginScreen() {
                         password={true}
                     />
                     <Button
+                        loading={loading}
                         text='Enter'
                         OnPress={() => {
                             loginAuthAsync({ email: email, password: password })

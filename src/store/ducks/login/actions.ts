@@ -22,3 +22,9 @@ export function loginFailure({ error }: LoginError) {
         payload: { error }
     }
 }
+
+export function loginClear(){
+    return {
+        type: LoginTypes.LOGIN_CLEAR
+    }
+}

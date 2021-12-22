@@ -1,11 +1,16 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { AuthRoutes } from "./auth.routes";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import { AppStack } from "./app";
+import { AuthStack } from "./auth";
 
-export function Routes(){
-  return(
-    <NavigationContainer>
-      <AuthRoutes></AuthRoutes>
-    </NavigationContainer>
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: "Auth",
+    }
   )
-}
+);

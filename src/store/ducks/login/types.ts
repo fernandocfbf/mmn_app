@@ -3,7 +3,8 @@
 export enum LoginTypes {
     LOGIN_AUTH = '@login/LOGIN_AUTH',
     LOGIN_SUCCESS = '@login/LOGIN_SUCCESS',
-    LOGIN_FAILURE = '@login/LOGIN_FAILURE'
+    LOGIN_FAILURE = '@login/LOGIN_FAILURE',
+    LOGIN_CLEAR = '@login/LOGIN_CLEAR',
 }
 
 // Data types - information format insside the reducer
