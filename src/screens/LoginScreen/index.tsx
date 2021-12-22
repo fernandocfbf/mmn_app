@@ -9,13 +9,12 @@ import { showMessage } from "react-native-flash-message";
 
 import { Button } from '../../components/Button'
 import { InputLogin } from '../../components/InputLogin';
-import { isAlredyLogged, openModal, closeModal, getUserInitials } from './utils';
+import { isAlredyLogged, openModal, closeModal, getUserInitials, handleAsyncStorageLogin } from './utils';
 import { loginAuth, loginClear } from '../../store/ducks/login/actions';
 
 import { styles } from './styles'
 import { colors } from '../../global/colors'
 import { metrics } from '../../global/metrics'
-import AsyncStorage from '@react-native-community/async-storage';
 
 export function LoginScreen() {
 
@@ -114,8 +113,11 @@ export function LoginScreen() {
                     />
                     <Text style={styles.modalTitle}>Hello, {name}</Text>
                     <Button
+                        loading={loading}
                         text='Enter'
-                        OnPress={() => { openModal(alreadyLoginModalRef) }}
+                        OnPress={() => {
+                            handleAsyncStorageLogin(loginAuthAsync)
+                        }}
                         textColor={colors.white}
                         extraStyle={{
                             backgroundColor: colors.background,
