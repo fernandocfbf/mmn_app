@@ -28,3 +28,9 @@ export function loginClear(){
         type: LoginTypes.LOGIN_CLEAR
     }
 }
+
+export function loginLogout() {
+    return {
+        type: LoginTypes.LOGIN_LOGOUT
+    }
+}

@@ -12,6 +12,7 @@ export function InputLogin({placeholder, icon, onChange, password}: Props) {
     return (
         <Input
             placeholder={placeholder}
+            autoCapitalize="none"
             leftIcon={icon}
             onChangeText={onChange}
             secureTextEntry={password}

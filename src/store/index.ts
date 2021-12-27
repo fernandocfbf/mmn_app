@@ -2,11 +2,15 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { LoginState } from "./ducks/login/types";
+import { UserState } from './ducks/user/types';
+
 import rootSaga from "./sagas"
 import rootReducer from "./ducks";
 
+
 export interface ApplicationState {
-    login: LoginState
+    login: LoginState;
+    user: UserState
 }
 
 const sagaMiddleware = createSagaMiddleware();

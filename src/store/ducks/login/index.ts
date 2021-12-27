@@ -30,6 +30,13 @@ const reducer: Reducer<LoginState> = (state = INITIAL_STATE, action) => {
                 ...state,
                 error: ''
             }
+        
+        case LoginTypes.LOGIN_LOGOUT:
+            return {
+                ...state,
+                error: '',
+                loading: false
+            }
 
         default: return state
     }
