@@ -25,9 +25,8 @@ export function* loginAuthAsync(action: any) {
     }
 }
 
-export function* loginLogoutAsync(action: any) {
+export function* loginLogoutAsync() {
     try {
-        yield put(loginLogout())
         yield AsyncStorage.removeItem('username')
         yield AsyncStorage.removeItem('email')
         yield AsyncStorage.removeItem('password')

@@ -19,13 +19,17 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18
     },
+    carousel: {
+        position: 'absolute',
+        top: metrics.baseMargin,
+        left: -metrics.baseMargin
+    },
     takePicture: {
         position: 'absolute',
         bottom: 0,
         width: 70,
         height: 70
     },
-    carousel: {
-        height: '40%',
-    }
+
+
 })

@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { showMessage } from "react-native-flash-message";
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 import { Button } from '../../components/Button'
@@ -51,133 +52,140 @@ export function LoginScreen() {
         }
     }, [error])
 
+    const { background, white } = colors
+
     return (
         <SafeAreaView
             style={{
-                flexGrow: 1,
-                backgroundColor: colors.background
+                flexGrow: 1
             }}
         >
-            <Image
-                style={styles.logo}
-                source={require('../../assets/logo-background.png')}
-            />
-            <View style={styles.container}>
-                <View style={styles.textContent}>
-                    <Text style={styles.title}>Measuring Macro Nutrients</Text>
-                    <Text style={styles.text}>
-                        Use our artificial intelligence to predict
-                        calories, proteins and carbs in your plate.
-                    </Text>
-                </View>
-                <View style={styles.buttonContent}>
-                    <Button
-                        text='Login'
-                        OnPress={() => { isAlredyLogged(alreadyLoginModalRef, insertDataModalRef, true) }}
-                        textColor={colors.background}
-                        extraStyle={{
-                            backgroundColor: colors.white,
-                            marginBottom: metrics.baseMargin / 2,
-                        }}
-                    />
-                    <Button
-                        text='Register'
-                        OnPress={() => { console.log('register button') }}
-                        textColor={colors.white}
-                        extraStyle={{
-                            backgroundColor: colors.background,
-                            borderColor: colors.white,
-                            borderWidth: 2,
-                        }}
-                    />
-                </View>
-            </View>
-            <RBSheet
-                ref={alreadyLoginModalRef}
-                customStyles={{
-                    container: {
-                        borderRadius: 15
-                    }
-                }}
-                closeOnDragDown
-                height={300}
-                openDuration={250}
-            >
-                <View style={styles.modal}>
-                    <Avatar
-                        size="medium"
-                        rounded
-                        title={typeof name == 'string' ? name : ''}
-                        activeOpacity={1}
-                        containerStyle={{ backgroundColor: colors.dark_gray }}
-                    />
-                    <Text style={styles.modalTitle}>Hello, {name}</Text>
-                    <Button
-                        loading={loading}
-                        text='Enter'
-                        OnPress={() => {
-                            handleAsyncStorageLogin(loginAuthAsync)
-                        }}
-                        textColor={colors.white}
-                        extraStyle={{
-                            backgroundColor: colors.background,
-                            borderColor: colors.white,
-                            marginBottom: metrics.baseMargin / 2.5
-                        }}
-                    />
-                    <Button
-                        text='Use another account'
-                        OnPress={() => {
-                            closeModal(alreadyLoginModalRef)
-                            openModal(insertDataModalRef)
-                        }}
-                        textColor={colors.dark_gray}
-                        extraStyle={{
-                            backgroundColor: colors.white,
-                            borderColor: colors.dark_gray,
-                            borderWidth: 2,
-                        }}
-                    />
-                </View>
-            </RBSheet>
+            <LinearGradient
+                locations={[0.1, 0.8]}
+                style={styles.gradient}
+                colors={[white, background]}>
 
-            <RBSheet
-                ref={insertDataModalRef}
-                customStyles={{
-                    container: {
-                        borderRadius: 15
-                    }
-                }}
-                closeOnDragDown
-                height={300}
-                openDuration={250}
-            >
-                <View style={styles.loginDataModal}>
-                    <InputLogin
-                        placeholder={'email'}
-                        icon={<EvilIcons name="envelope" size={24} color={colors.dark_gray} />}
-                        onChange={(e: string) => setEmail(e)}
-                        password={false}
-                    />
-                    <InputLogin
-                        placeholder={'password'}
-                        icon={<EvilIcons name="lock" size={24} color={colors.dark_gray} />}
-                        onChange={(e: string) => setPassword(e)}
-                        password={true}
-                    />
-                    <Button
-                        loading={loading}
-                        text='Enter'
-                        OnPress={() => {
-                            loginAuthAsync({ email: email, password: password })
-                        }}
-                        textColor={colors.white}
-                        extraStyle={{
-                            backgroundColor: colors.background,
-                        }}
-                    />
+                <Image
+                    style={styles.logo}
+                    source={require('../../assets/logo-background1.png')}
+                />
+                <View style={styles.container}>
+                    <View style={styles.textContent}>
+                        <Text style={styles.title}>Measuring Macro Nutrients</Text>
+                        <Text style={styles.text}>
+                            Use our artificial intelligence to predict
+                            calories, proteins and carbs in your plate.
+                        </Text>
+                    </View>
+                    <View style={styles.buttonContent}>
+                        <Button
+                            text='Login'
+                            OnPress={() => { isAlredyLogged(alreadyLoginModalRef, insertDataModalRef, true) }}
+                            textColor={colors.background}
+                            extraStyle={{
+                                backgroundColor: colors.white,
+                                marginBottom: metrics.baseMargin / 2,
+                            }}
+                        />
+                        <Button
+                            text='Register'
+                            OnPress={() => { console.log('register button') }}
+                            textColor={colors.white}
+                            extraStyle={{
+                                backgroundColor: colors.background,
+                                borderColor: colors.white,
+                                borderWidth: 2,
+                            }}
+                        />
+                    </View>
                 </View>
-            </RBSheet>
+                <RBSheet
+                    ref={alreadyLoginModalRef}
+                    customStyles={{
+                        container: {
+                            borderRadius: 15
+                        }
+                    }}
+                    closeOnDragDown
+                    height={300}
+                    openDuration={250}
+                >
+                    <View style={styles.modal}>
+                        <Avatar
+                            size="medium"
+                            rounded
+                            title={typeof name == 'string' ? name : ''}
+                            activeOpacity={1}
+                            containerStyle={{ backgroundColor: colors.dark_gray }}
+                        />
+                        <Text style={styles.modalTitle}>Hello, {name}</Text>
+                        <Button
+                            loading={loading}
+                            text='Enter'
+                            OnPress={() => {
+                                handleAsyncStorageLogin(loginAuthAsync)
+                            }}
+                            textColor={colors.white}
+                            extraStyle={{
+                                backgroundColor: colors.background,
+                                borderColor: colors.white,
+                                marginBottom: metrics.baseMargin / 2.5
+                            }}
+                        />
+                        <Button
+                            text='Use another account'
+                            OnPress={() => {
+                                closeModal(alreadyLoginModalRef)
+                                openModal(insertDataModalRef)
+                            }}
+                            textColor={colors.dark_gray}
+                            extraStyle={{
+                                backgroundColor: colors.white,
+                                borderColor: colors.dark_gray,
+                                borderWidth: 2,
+                            }}
+                        />
+                    </View>
+                </RBSheet>
+
+                <RBSheet
+                    ref={insertDataModalRef}
+                    customStyles={{
+                        container: {
+                            borderRadius: 15
+                        }
+                    }}
+                    closeOnDragDown
+                    height={300}
+                    openDuration={250}
+                >
+                    <View style={styles.loginDataModal}>
+                        <InputLogin
+                            placeholder={'email'}
+                            icon={<EvilIcons name="envelope" size={24} color={colors.dark_gray} />}
+                            onChange={(e: string) => setEmail(e)}
+                            password={false}
+                        />
+                        <InputLogin
+                            placeholder={'password'}
+                            icon={<EvilIcons name="lock" size={24} color={colors.dark_gray} />}
+                            onChange={(e: string) => setPassword(e)}
+                            password={true}
+                        />
+                        <Button
+                            loading={loading}
+                            text='Enter'
+                            OnPress={() => {
+                                loginAuthAsync({ email: email, password: password })
+                            }}
+                            textColor={colors.white}
+                            extraStyle={{
+                                backgroundColor: colors.background,
+                            }}
+                        />
+                    </View>
+                </RBSheet>
+            </LinearGradient>
         </SafeAreaView>
     )
 }

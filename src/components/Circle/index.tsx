@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text } from 'react-native'
 import { ParallaxImage } from 'react-native-snap-carousel';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { colors } from "../../global/colors";
@@ -8,10 +8,8 @@ import { styles } from './styles'
 
 
 export function Circle({ item, index }: any, parallaxProps: any) {
-    const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
-
     return (
-        <View style={[styles.container, { width: windowWidth, height: windowHeight * 0.4 }]}>
+        <View style={[styles.container]}>
             <AnimatedCircularProgress
                 style={styles.circle}
                 size={250}
@@ -22,7 +20,8 @@ export function Circle({ item, index }: any, parallaxProps: any) {
                 backgroundColor={colors.gray} />
 
             <View style={styles.content}>
-                <Text>{item['title']}</Text>
+                <Text style={styles.text}>{item['title']}</Text>
+                <Text style={styles.title}>{item['value'] + 'g'}</Text>
             </View>
         </View>
     )

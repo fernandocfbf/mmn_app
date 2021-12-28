@@ -6,6 +6,7 @@ import { colors } from "../../global/colors";
 export const styles = StyleSheet.create({
     container: {
         width: '100%',
+        height: 250,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -16,14 +17,22 @@ export const styles = StyleSheet.create({
         width: 220,
         backgroundColor: colors.white,
         borderRadius: 110,
-        shadowColor: colors.dark_gray,
+        shadowColor: colors.black,
         shadowOffset: { width: 100, height: 100 },
-        shadowOpacity: 0.9,
+        shadowOpacity: 1,
         shadowRadius: 5,
-        elevation: 20,
+        elevation: 10,
     },
     circle: {
         position: 'absolute'
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    text: {
+        fontSize: 18,
+        fontWeight: 'normal'
     }
 
 })

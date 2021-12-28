@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
         width: 150,
         resizeMode: 'contain'
     },
+    gradient: {
+        height: '100%'
+    },
     container: {
         flexGrow: 1,
         marginHorizontal: metrics.baseMargin,
