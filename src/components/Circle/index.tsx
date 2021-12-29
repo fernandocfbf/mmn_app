@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text } from 'react-native'
-import { ParallaxImage } from 'react-native-snap-carousel';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { colors } from "../../global/colors";
 

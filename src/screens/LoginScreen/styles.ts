@@ -4,7 +4,7 @@ import { Dimensions } from 'react-native';
 import { colors } from "../../global/colors";
 import { metrics } from "../../global/metrics";
 
-const { height } = Dimensions.get('window');
+const iphone = Platform.OS === 'ios'
 
 export const styles = StyleSheet.create({
     logo: {
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         marginHorizontal: metrics.baseMargin,
-        marginVertical: 2 * metrics.baseMargin,
+        marginVertical: iphone ? metrics.baseMargin : 2 * metrics.baseMargin,
         justifyContent: 'flex-end',
     },
     textContent: {

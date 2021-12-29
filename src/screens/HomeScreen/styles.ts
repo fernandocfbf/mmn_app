@@ -2,11 +2,13 @@ import { StyleSheet, Platform } from "react-native";
 import { colors } from "../../global/colors";
 import { metrics } from "../../global/metrics";
 
+const iphone = Platform.OS === 'ios'
+
 export const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         marginHorizontal: metrics.baseMargin,
-        marginVertical: 2 * metrics.baseMargin,
+        marginVertical: iphone ? 0 : 2 * metrics.baseMargin,
         alignItems: 'center'
     },
     header: {
@@ -28,8 +30,12 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: 70,
-        height: 70
+        height: 70,
     },
+    image: {
+        width: 70,
+        height: 70,
+    }
 
 
 })

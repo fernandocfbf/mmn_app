@@ -17,11 +17,11 @@ export const styles = StyleSheet.create({
         width: 220,
         backgroundColor: colors.white,
         borderRadius: 110,
-        shadowColor: colors.black,
-        shadowOffset: { width: 100, height: 100 },
-        shadowOpacity: 1,
-        shadowRadius: 5,
-        elevation: 10,
+        shadowColor: colors.dark_gray,
+        shadowOffset: { width: 8, height: 8 },
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+        elevation: 5,
     },
     circle: {
         position: 'absolute'

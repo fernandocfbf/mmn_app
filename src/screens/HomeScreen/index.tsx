@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, SafeAreaView, Image, Dimensions } from 'react-native'
+import { View, Text, SafeAreaView, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { Camera } from 'expo-camera';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Circle } from "../../components/Circle";
@@ -13,7 +14,7 @@ import { styles } from "./styles";
 import { colors } from "../../global/colors";
 import { loginLogout } from "../../store/ducks/login/actions";
 import { metrics } from "../../global/metrics";
-
+import { navigate } from "../../services/navigation";
 
 
 export function HomeScreen() {
@@ -71,40 +72,46 @@ export function HomeScreen() {
                 <View style={{
                     position: 'absolute',
                     top: height / 2 - 4 * metrics.baseMargin,
-                left: -metrics.baseMargin
+                    left: -metrics.baseMargin
                 }}>
 
-                <Carousel
-                    sliderWidth={width}
-                    sliderHeight={width}
-                    itemWidth={width}
-                    data={nutrients}
-                    renderItem={Circle}
-                    hasParallaxImages={false}
-                    onSnapToItem={(index: number) => setDotSelect(index)}
-                    enableMomentum={true}
-                />
-                <Pagination
-                    containerStyle={{ height: 65 }}
-                    dotsLength={nutrients.length}
-                    activeDotIndex={dotSelect}
-                    dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 5,
-                        marginHorizontal: 8,
-                        backgroundColor: colors.dark_gray
-                    }}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.6}
-                />
+                    <Carousel
+                        sliderWidth={width}
+                        sliderHeight={width}
+                        itemWidth={width}
+                        data={nutrients}
+                        renderItem={Circle}
+                        hasParallaxImages={false}
+                        onSnapToItem={(index: number) => setDotSelect(index)}
+                        enableMomentum={true}
+                    />
+                    <Pagination
+                        containerStyle={{ height: 65 }}
+                        dotsLength={nutrients.length}
+                        activeDotIndex={dotSelect}
+                        dotStyle={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            marginHorizontal: 8,
+                            backgroundColor: colors.dark_gray
+                        }}
+                        inactiveDotOpacity={0.4}
+                        inactiveDotScale={0.6}
+                    />
+                </View>
+                <TouchableOpacity
+                    style={styles.takePicture}
+                    onPress={() => navigate({routeName: 'TakePictureScreen', params: {}})}
+                >
+                    <Image
+                        style={styles.image}
+                        source={require('../../assets/logo3.png')}
+                        resizeMethod='scale'
+                    />
+                </TouchableOpacity>
+
             </View>
-            <Image
-                style={styles.takePicture}
-                source={require('../../assets/logo3.png')}
-                resizeMethod='scale'
-            />
-        </View>
 
         </SafeAreaView >
     )

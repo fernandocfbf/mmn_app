@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         height: 70,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 40,
+        borderRadius: 35,
     },
     title: {
         color: colors.dark_gray,
