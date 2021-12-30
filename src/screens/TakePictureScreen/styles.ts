@@ -22,7 +22,17 @@ export const styles = StyleSheet.create({
     cameraButton: {
         height: 70,
         width: 70,
+        borderWidth: 5,
+        borderColor: colors.white,
         borderRadius: 35,
-        backgroundColor: colors.white
+        backgroundColor: colors.gray,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
+    center: {
+        height: 46,
+        width: 46,
+        backgroundColor: colors.white,
+        borderRadius: 23,
+    }
 })

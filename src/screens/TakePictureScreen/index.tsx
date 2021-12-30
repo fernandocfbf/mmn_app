@@ -36,11 +36,8 @@ export function TakePictureScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-
-            </View>
             <Camera
-                style={{ flex: 1}}
+                style={{ flex: 1 }}
                 type={cameraType} flashMode={handleFlashMode(enableFlash)}
                 ref={(r) => {
                     camera = r
@@ -62,8 +59,9 @@ export function TakePictureScreen() {
                     style={styles.cameraButton}
                     onPress={() => camera.takePictureAsync()}
                 >
-
+                    <View style={styles.center} />
                 </TouchableOpacity>
+
                 <Ionicons
                     name={enableFlash ? 'flash' : 'flash-off'}
                     size={24} color={colors.white}
