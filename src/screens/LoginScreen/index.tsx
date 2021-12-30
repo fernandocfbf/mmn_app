@@ -132,6 +132,7 @@ export function LoginScreen() {
                     <Button
                         text='Use another account'
                         OnPress={() => {
+                            console.log("Executing...")
                             closeModal(alreadyLoginModalRef)
                             openModal(insertDataModalRef)
                         }}

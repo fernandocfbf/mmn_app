@@ -11,7 +11,14 @@ export function closeModal(modalRef: any) {
 }
 
 export function openModal(modalRef: any) {
-    if (modalRef.current != null) modalRef.current.open()
+    console.log(modalRef.current)
+    try{
+        if (modalRef.current != null) modalRef.current.open()
+    }
+    catch (error) {
+        console.log(error)
+    }
+    
 }
 
 export async function isAlredyLogged(modalRef: any, alternative?: any, elseCondition?: boolean) {
