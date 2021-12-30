@@ -35,84 +35,82 @@ export function HomeScreen() {
     const loginLogoutAsync = useCallback(() => dispatch(loginLogout()), [dispatch])
 
     return (
-        <SafeAreaView
+        <View
             style={{
                 flexGrow: 1,
                 backgroundColor: colors.white
             }}
         >
+            <SafeAreaView style={{ flex: 0 }} />
             <View style={styles.container}>
                 <View style={styles.header}>
+                    <View style={styles.user}>
+                        <View>
+                            <Text style={{ fontSize: 16 }}>
+                                {handleTime()},
+                            </Text>
+                            <Text style={styles.title}>
+                                {name.name}
+                            </Text>
+                        </View>
+
+                        <Avatar
+                            size="small"
+                            rounded
+                            title={'RU'}
+                            activeOpacity={1}
+                            containerStyle={{ backgroundColor: colors.dark_gray }}
+                            onPress={() => {
+                                console.log("ENTIRITJ")
+                                loginLogoutAsync()
+                            }
+                            }
+                        />
+                    </View>
+                    <Menu />
+                </View>
+                <SafeAreaView style={styles.content}>
                     <View>
-                        <Text style={{ fontSize: 16 }}>
-                            {handleTime()},
-                        </Text>
-                        <Text style={styles.title}>
-                            {name.name}
-                        </Text>
+                        <Carousel
+                            sliderWidth={width}
+                            sliderHeight={width}
+                            itemWidth={width}
+                            data={nutrients}
+                            renderItem={Circle}
+                            hasParallaxImages={false}
+                            onSnapToItem={(index: number) => setDotSelect(index)}
+                            enableMomentum={true}
+                        />
+                        <Pagination
+                            containerStyle={{ height: 65 }}
+                            dotsLength={nutrients.length}
+                            activeDotIndex={dotSelect}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 8,
+                                backgroundColor: colors.white
+                            }}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.6}
+                        />
+                    </View>
+                    <View style={styles.takePicture}>
+                        <TouchableOpacity
+                            style={styles.takePictureIcon}
+                            onPress={() => navigate({ routeName: 'TakePictureScreen', params: {} })}
+                        >
+                            <Image
+                                style={styles.image}
+                                source={require('../../assets/logo.png')}
+                                resizeMethod='scale'
+                            />
+                        </TouchableOpacity>
                     </View>
 
-                    <Avatar
-                        size="small"
-                        rounded
-                        title={'RU'}
-                        activeOpacity={1}
-                        containerStyle={{ backgroundColor: colors.dark_gray }}
-                        onPress={() => {
-                            console.log("ENTIRITJ")
-                            loginLogoutAsync()
-                        }
-                        }
-                    />
-
-                </View>
-
-                <Menu />
-
-                <View style={{
-                    position: 'absolute',
-                    top: height / 2 - 4 * metrics.baseMargin,
-                    left: -metrics.baseMargin
-                }}>
-
-                    <Carousel
-                        sliderWidth={width}
-                        sliderHeight={width}
-                        itemWidth={width}
-                        data={nutrients}
-                        renderItem={Circle}
-                        hasParallaxImages={false}
-                        onSnapToItem={(index: number) => setDotSelect(index)}
-                        enableMomentum={true}
-                    />
-                    <Pagination
-                        containerStyle={{ height: 65 }}
-                        dotsLength={nutrients.length}
-                        activeDotIndex={dotSelect}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 8,
-                            backgroundColor: colors.dark_gray
-                        }}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.6}
-                    />
-                </View>
-                <TouchableOpacity
-                    style={styles.takePicture}
-                    onPress={() => navigate({routeName: 'TakePictureScreen', params: {}})}
-                >
-                    <Image
-                        style={styles.image}
-                        source={require('../../assets/logo3.png')}
-                        resizeMethod='scale'
-                    />
-                </TouchableOpacity>
-
+                </SafeAreaView>
             </View>
-
-        </SafeAreaView >
+        </View >
     )
 }

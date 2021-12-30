@@ -14,9 +14,9 @@ export function Circle({ item, index }: any, parallaxProps: any) {
                 size={250}
                 width={5}
                 fill={item['fill']}
-                tintColor={colors.background}
+                tintColor={colors.white}
                 onAnimationComplete={() => console.log('onAnimationComplete')}
-                backgroundColor={colors.gray} />
+                backgroundColor={colors.dark_gray} />
 
             <View style={styles.content}>
                 <Text style={styles.text}>{item['title']}</Text>

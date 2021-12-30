@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export async function handleAsyncStorageLogin(loginFunction: any){
+export async function handleAsyncStorageLogin(loginFunction: any) {
     const email = await AsyncStorage.getItem('email')
     const password = await AsyncStorage.getItem('password')
-    loginFunction({email: email, password: password})
+    loginFunction({ email: email, password: password })
 }
 
 export function closeModal(modalRef: any) {
@@ -11,14 +11,7 @@ export function closeModal(modalRef: any) {
 }
 
 export function openModal(modalRef: any) {
-    console.log(modalRef.current)
-    try{
-        if (modalRef.current != null) modalRef.current.open()
-    }
-    catch (error) {
-        console.log(error)
-    }
-    
+    if (modalRef.current != null) modalRef.current.open()
 }
 
 export async function isAlredyLogged(modalRef: any, alternative?: any, elseCondition?: boolean) {

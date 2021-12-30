@@ -134,7 +134,7 @@ export function LoginScreen() {
                         OnPress={() => {
                             console.log("Executing...")
                             closeModal(alreadyLoginModalRef)
-                            openModal(insertDataModalRef)
+                            
                         }}
                         textColor={colors.dark_gray}
                         extraStyle={{

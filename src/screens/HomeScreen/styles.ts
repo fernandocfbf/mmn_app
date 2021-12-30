@@ -7,28 +7,39 @@ const iphone = Platform.OS === 'ios'
 export const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        marginHorizontal: metrics.baseMargin,
-        marginVertical: iphone ? 0 : 2 * metrics.baseMargin,
+        marginTop: iphone ? 0 : 2 * metrics.baseMargin,
         alignItems: 'center'
     },
     header: {
         width: '100%',
+        paddingHorizontal: metrics.baseMargin,
         alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+    },
+    user: {
+        width: '100%',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
     },
     title: {
         fontWeight: 'bold',
         fontSize: 18
     },
-    carousel: {
-        position: 'absolute',
-        top: metrics.baseMargin,
-        left: -metrics.baseMargin
+    content: {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'space-evenly',
+        paddingTop: metrics.baseMargin,
+        backgroundColor: colors.background,
+        borderTopStartRadius: 5 * metrics.baseRadius,
+        borderTopEndRadius: 5 * metrics.baseRadius
     },
     takePicture: {
-        position: 'absolute',
-        bottom: 0,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 70,
+    },
+    takePictureIcon: {
         width: 70,
         height: 70,
     },
