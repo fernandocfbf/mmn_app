@@ -34,5 +34,17 @@ export const styles = StyleSheet.create({
         width: 46,
         backgroundColor: colors.white,
         borderRadius: 23,
+    },
+    previewContainer: {
+        flex: 1,
+        marginHorizontal: metrics.baseMargin,
+        marginVertical: iphone ? metrics.baseMargin : 2 * metrics.baseMargin,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    photoPreview:{
+        width: '100%',
+        height: 300,
+        borderRadius: metrics.baseRadius
     }
 })

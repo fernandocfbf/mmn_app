@@ -3,6 +3,9 @@ export function handleFlashMode(flash: boolean){
     return 'off'
 }
 
-export function takePicture(camera: any){
-    camera.takePictureAsync()
+export async function takePicture(camRef: any, setPhoto: Function){
+    if(camRef){
+        const data = await camRef.current.takePictureAsync()
+        setPhoto(data)
+    }
 }

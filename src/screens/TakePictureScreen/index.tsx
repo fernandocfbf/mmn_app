@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, TouchableOpacity, SafeAreaView, Image, Platform } from "react-native";
 import { Camera } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,21 +9,21 @@ import { handleFlashMode, takePicture } from "./utils";
 import { Button } from "../../components/Button";
 import { colors } from "../../global/colors";
 import { metrics } from "../../global/metrics";
-import { navigate } from "../../services/navigation";
+import { goBack, navigate } from "../../services/navigation";
 import { styles } from "./styles";
+import { Header } from "../../components/Header";
 
 export function TakePictureScreen() {
-    let camera: Camera
-
+    const camRef = useRef(null)
     const [hasPermission, setHasPermission] = useState('pending');
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [enableFlash, setEnableFlash] = useState(false)
-
-    console.log(hasPermission)
+    const [capturedPhoto, setCapturedPhoto] = useState({ uri: '', widht: null, height: null })
+    const [photoPreview, setPhotoPreview] = useState(false)
 
     useEffect(() => {
         (async () => {
-            const { status } = await Camera.requestPermissionsAsync();
+            const { status } = await Camera.requestCameraPermissionsAsync();
             setHasPermission(status);
         })();
     }, []);
@@ -34,14 +34,33 @@ export function TakePictureScreen() {
         }
     }, [hasPermission]);
 
+    if (photoPreview) {
+        return (
+            <SafeAreaView style={styles.previewContainer}>
+                <Header onBackPress={() => setPhotoPreview(false)} onCancelPress={() => goBack()}/>
+                <Image
+                    style={styles.photoPreview}
+                    source={{ uri: capturedPhoto.uri }}
+                />
+                <Button
+                    loading={false}
+                    text='Send'
+                    OnPress={() => {console.log('Pressed!')}}
+                    textColor={colors.white}
+                    extraStyle={{
+                        backgroundColor: colors.background,
+                    }}
+                />
+            </SafeAreaView>
+        )
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Camera
                 style={{ flex: 1 }}
                 type={cameraType} flashMode={handleFlashMode(enableFlash)}
-                ref={(r) => {
-                    camera = r
-                }} />
+                ref={camRef} />
             <View style={styles.content}>
                 <MaterialIcons
                     name='flip-camera-android'
@@ -57,7 +76,10 @@ export function TakePictureScreen() {
                 />
                 <TouchableOpacity
                     style={styles.cameraButton}
-                    onPress={() => camera.takePictureAsync()}
+                    onPress={async () => {
+                        await takePicture(camRef, setCapturedPhoto)
+                        setPhotoPreview(true)
+                    }}
                 >
                     <View style={styles.center} />
                 </TouchableOpacity>
@@ -69,6 +91,5 @@ export function TakePictureScreen() {
                 />
             </View>
         </SafeAreaView>
-
     )
 }

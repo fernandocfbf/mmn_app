@@ -3,7 +3,7 @@ import { NavigationActions, StackActions } from "react-navigation";
 
 type Props = {
     routeName: string;
-    params: object
+    params: object;
 }
 
 const config: any = {};
@@ -16,7 +16,14 @@ export function setNavigator(nav: any) {
 
 export function navigate({ routeName, params }: Props) {
     if (config.navigator && routeName) {
-        let action = NavigationActions.navigate({ routeName, params });
-        config.navigator.dispatch(action);
+        let action = NavigationActions.navigate({ routeName, params })
+        config.navigator.dispatch(action)
+    }
+}
+
+export function goBack(){
+    if(config.navigator){
+        let action = NavigationActions.back({})
+        config.navigator.dispatch(action)
     }
 }
