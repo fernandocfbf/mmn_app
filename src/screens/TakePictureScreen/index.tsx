@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
-import { handleFlashMode, takePicture } from "./utils";
+import { handleFlashMode, takePicture, readImageAsBase64 } from "./utils";
 
 import { Button } from "../../components/Button";
 import { colors } from "../../global/colors";
@@ -37,7 +37,7 @@ export function TakePictureScreen() {
     if (photoPreview) {
         return (
             <SafeAreaView style={styles.previewContainer}>
-                <Header onBackPress={() => setPhotoPreview(false)} onCancelPress={() => goBack()}/>
+                <Header onBackPress={() => setPhotoPreview(false)} onCancelPress={() => goBack()} />
                 <Image
                     style={styles.photoPreview}
                     source={{ uri: capturedPhoto.uri }}
@@ -45,7 +45,7 @@ export function TakePictureScreen() {
                 <Button
                     loading={false}
                     text='Send'
-                    OnPress={() => {console.log('Pressed!')}}
+                    OnPress={() => readImageAsBase64(capturedPhoto.uri)}
                     textColor={colors.white}
                     extraStyle={{
                         backgroundColor: colors.background,
