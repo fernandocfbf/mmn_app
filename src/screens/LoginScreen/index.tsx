@@ -5,14 +5,13 @@ import { Avatar } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { showMessage } from "react-native-flash-message";
-import { LinearGradient } from 'expo-linear-gradient'
-
 
 import { Button } from '../../components/Button'
 import { InputLogin } from '../../components/InputLogin';
-import { isAlredyLogged, openModal, closeModal, getUserInitials, handleAsyncStorageLogin } from './utils';
+import { isAlredyLogged, closeModal, getUserInitials, handleAsyncStorageLogin } from './utils';
 import { loginAuth, loginClear } from '../../store/ducks/login/actions';
 
+import { api } from '../../services/api';
 import { styles } from './styles'
 import { colors } from '../../global/colors'
 import { metrics } from '../../global/metrics'
@@ -86,7 +85,18 @@ export function LoginScreen() {
                     />
                     <Button
                         text='Register'
-                        OnPress={() => { console.log('register button') }}
+                        OnPress={async () => {
+                            console.log('executing...')
+
+                            await api.get('ping').then((resp) => {
+                                console.log('A resposta -> ', resp)
+                            }).catch(function (error) {
+
+                                console.log(JSON.stringify(error))
+                            });
+                            console.log('executed')
+
+                        }}
                         textColor={colors.white}
                         extraStyle={{
                             backgroundColor: colors.background,
@@ -134,7 +144,7 @@ export function LoginScreen() {
                         OnPress={() => {
                             console.log("Executing...")
                             closeModal(alreadyLoginModalRef)
-                            
+
                         }}
                         textColor={colors.dark_gray}
                         extraStyle={{

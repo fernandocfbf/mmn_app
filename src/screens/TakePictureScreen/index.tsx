@@ -13,8 +13,12 @@ import { goBack, navigate } from "../../services/navigation";
 import { styles } from "./styles";
 import { Header } from "../../components/Header";
 
+import { api } from "../../services/api";
+
 export function TakePictureScreen() {
     const camRef = useRef(null)
+
+    const [loading, setLoading] = useState(false)
     const [hasPermission, setHasPermission] = useState('pending');
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [enableFlash, setEnableFlash] = useState(false)
@@ -34,6 +38,13 @@ export function TakePictureScreen() {
         }
     }, [hasPermission]);
 
+    async function sendPicture() {
+        setLoading(true)
+        const base64 = await readImageAsBase64(capturedPhoto.uri)
+        const res = await api.post('model', {data: base64})
+        setLoading(false)
+    }
+
     if (photoPreview) {
         return (
             <SafeAreaView style={styles.previewContainer}>
@@ -43,9 +54,9 @@ export function TakePictureScreen() {
                     source={{ uri: capturedPhoto.uri }}
                 />
                 <Button
-                    loading={false}
+                    loading={loading}
                     text='Send'
-                    OnPress={() => readImageAsBase64(capturedPhoto.uri)}
+                    OnPress={() => sendPicture()}
                     textColor={colors.white}
                     extraStyle={{
                         backgroundColor: colors.background,
