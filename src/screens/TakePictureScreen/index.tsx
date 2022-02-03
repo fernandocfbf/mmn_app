@@ -14,6 +14,7 @@ import { styles } from "./styles";
 import { Header } from "../../components/Header";
 
 import { api } from "../../services/api";
+import { showMessage } from "react-native-flash-message";
 
 export function TakePictureScreen() {
     const camRef = useRef(null)
@@ -24,6 +25,7 @@ export function TakePictureScreen() {
     const [enableFlash, setEnableFlash] = useState(false)
     const [capturedPhoto, setCapturedPhoto] = useState({ uri: '', widht: null, height: null })
     const [photoPreview, setPhotoPreview] = useState(false)
+    const [receivedPhoto, setReceivedPhoto] = useState(null)
 
     useEffect(() => {
         (async () => {
@@ -39,10 +41,27 @@ export function TakePictureScreen() {
     }, [hasPermission]);
 
     async function sendPicture() {
-        setLoading(true)
-        const base64 = await readImageAsBase64(capturedPhoto.uri)
-        const res = await api.post('model', {data: base64})
-        setLoading(false)
+        try {
+            setLoading(true)
+            const base64 = await readImageAsBase64(capturedPhoto.uri)
+            const res = await api.post('model', { data: base64 }).then(
+                (response) => {
+                    const base64_string = response.data.data[0]['prediction']
+                    const img = base64_string.split('\'')[1]
+                    console.log("image ->", img)
+                    setReceivedPhoto(img)
+                }
+            )
+        } catch (error: any) {
+            showMessage({
+                message: error,
+                icon: 'danger',
+                type: 'danger',
+            });
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     if (photoPreview) {
@@ -51,17 +70,26 @@ export function TakePictureScreen() {
                 <Header onBackPress={() => setPhotoPreview(false)} onCancelPress={() => goBack()} />
                 <Image
                     style={styles.photoPreview}
-                    source={{ uri: capturedPhoto.uri }}
+                    source={
+                        receivedPhoto ? 
+                            { uri: 'data:image/jpeg;base64,'+receivedPhoto} : 
+                            { uri: capturedPhoto.uri }}
                 />
-                <Button
-                    loading={loading}
-                    text='Send'
-                    OnPress={() => sendPicture()}
-                    textColor={colors.white}
-                    extraStyle={{
-                        backgroundColor: colors.background,
-                    }}
-                />
+                {receivedPhoto ? 
+                (<View></View>)
+                : (
+                        <Button
+                            loading={loading}
+                            text='Send'
+                            OnPress={() => sendPicture()}
+                            textColor={colors.white}
+                            extraStyle={{
+                                backgroundColor: colors.background,
+                            }}
+                        />
+                    )
+                }
+
             </SafeAreaView>
         )
     }
@@ -89,6 +117,7 @@ export function TakePictureScreen() {
                     style={styles.cameraButton}
                     onPress={async () => {
                         await takePicture(camRef, setCapturedPhoto)
+                        setReceivedPhoto(null)
                         setPhotoPreview(true)
                     }}
                 >
