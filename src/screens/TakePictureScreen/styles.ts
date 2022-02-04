@@ -46,5 +46,14 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: 300,
         borderRadius: metrics.baseRadius
+    },
+    identified:{
+        width: '100%',
+        height: 300,
+    },
+    macros:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: "center"
     }
 })

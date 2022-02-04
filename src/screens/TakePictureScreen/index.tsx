@@ -12,6 +12,7 @@ import { metrics } from "../../global/metrics";
 import { goBack, navigate } from "../../services/navigation";
 import { styles } from "./styles";
 import { Header } from "../../components/Header";
+import { Macro } from "../../components/Macro";
 
 import { api } from "../../services/api";
 import { showMessage } from "react-native-flash-message";
@@ -26,6 +27,7 @@ export function TakePictureScreen() {
     const [capturedPhoto, setCapturedPhoto] = useState({ uri: '', widht: null, height: null })
     const [photoPreview, setPhotoPreview] = useState(false)
     const [receivedPhoto, setReceivedPhoto] = useState(null)
+    const [classes, setClasses] = useState([])
 
     useEffect(() => {
         (async () => {
@@ -46,9 +48,9 @@ export function TakePictureScreen() {
             const base64 = await readImageAsBase64(capturedPhoto.uri)
             const res = await api.post('model', { data: base64 }).then(
                 (response) => {
+                    setClasses(response.data.data[0]['classes'])
                     const base64_string = response.data.data[0]['prediction']
                     const img = base64_string.split('\'')[1]
-                    console.log("image ->", img)
                     setReceivedPhoto(img)
                 }
             )
@@ -71,13 +73,24 @@ export function TakePictureScreen() {
                 <Image
                     style={styles.photoPreview}
                     source={
-                        receivedPhoto ? 
-                            { uri: 'data:image/jpeg;base64,'+receivedPhoto} : 
+                        receivedPhoto ?
+                            { uri: 'data:image/jpeg;base64,' + receivedPhoto } :
                             { uri: capturedPhoto.uri }}
                 />
-                {receivedPhoto ? 
-                (<View></View>)
-                : (
+                {receivedPhoto ?
+                    (
+                        <View style={styles.identified}>
+
+                            <View style={styles.macros}>
+                                <Macro title={"protein"} value={20} carb={false} />
+                                <Macro title={"carb"} value={100} carb={true} />
+                                <Macro title={"fat"} value={17} carb={false} />
+
+                            </View>
+
+                        </View>
+                    )
+                    : (
                         <Button
                             loading={loading}
                             text='Send'
