@@ -27,7 +27,7 @@ export function TakePictureScreen() {
     const [capturedPhoto, setCapturedPhoto] = useState({ uri: '', widht: null, height: null })
     const [photoPreview, setPhotoPreview] = useState(false)
     const [receivedPhoto, setReceivedPhoto] = useState(null)
-    const [classes, setClasses] = useState([])
+    const [macros, setMacros] = useState({'protein': 0, 'carb': 0, "fat": 0})
 
     useEffect(() => {
         (async () => {
@@ -48,7 +48,7 @@ export function TakePictureScreen() {
             const base64 = await readImageAsBase64(capturedPhoto.uri)
             const res = await api.post('model', { data: base64 }).then(
                 (response) => {
-                    setClasses(response.data.data[0]['classes'])
+                    setMacros(response.data.data[0]['macro_nutrients'])
                     const base64_string = response.data.data[0]['prediction']
                     const img = base64_string.split('\'')[1]
                     setReceivedPhoto(img)
@@ -82,9 +82,9 @@ export function TakePictureScreen() {
                         <View style={styles.identified}>
 
                             <View style={styles.macros}>
-                                <Macro title={"protein"} value={20} carb={false} />
-                                <Macro title={"carb"} value={100} carb={true} />
-                                <Macro title={"fat"} value={17} carb={false} />
+                                <Macro title={"protein"} value={macros['protein']} carb={false} />
+                                <Macro title={"carb"} value={macros['carb']} carb={true} />
+                                <Macro title={"fat"} value={macros['fat']} carb={false} />
 
                             </View>
 
